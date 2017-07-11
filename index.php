@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
 	<meta charset="UTF-8">
 	<title>test</title>
@@ -14,6 +14,10 @@
 			padding-top: 10%;
 			background-color: #ff6d00;
 		}
+		#iptbox::-webkit-datetime-edit-week-field{
+			padding: 10px;
+			width: 500px;
+		}
 	</style>
 </head>
 <body>
@@ -21,7 +25,7 @@
 	<div class="test">is</div>
 	<div class="test">work</div>
 	<a href="tel:18368092182" style="font-size:25px;" class="test">1</a>
-	<input id="iptbox" type="text">
+	<input id="iptbox" type="date">
 	<textarea id="text11" cols="30" rows="10"></textarea>
 	<a href="javascript:;" id="textaa" onclick="subtext()">check</a>
 	<script>
@@ -77,7 +81,7 @@
 				console.log(item);
 			});
 		}
-		// 添加一段数组到另一段
+		// 脤铆录脫脪禄露脦脢媒脳茅碌陆脕铆脪禄露脦
 		var arr1 = [1,2,5,4],
 			arr2 = [6,3,8];
 		arr1.push(...arr2);
@@ -102,7 +106,7 @@
 				return this.sm;
 			}
 		}
-		// 模块输出变量适合使用简洁写法
+		// 脛拢驴茅脢盲鲁枚卤盲脕驴脢脢潞脧脢鹿脫脙录貌陆脿脨麓路篓
 		// module.exports = {getItem,setItem,clear};
 		let obj = { 1: `ni`,2: `wo`,3: `ta`,length: 3,
 			[Symbol.iterator]: function(){
@@ -144,7 +148,7 @@
 		map.set(testArr,"correct");
 		map.get(testArr);//correct
 		var ele = document.querySelectorAll(".test");
-		[...ele].map((that)=> console.log(that.innerHTML));//遍历数组，相当于each
+		[...ele].map((that)=> console.log(that.innerHTML));//卤茅脌煤脢媒脳茅拢卢脧脿碌卤脫脷each
 		function* fiboiner(){
 			yield "some1";
 			yield "some2";
@@ -169,9 +173,9 @@
 			}
 		})
 		promise.then((res)=>{console.log("do sth1.5,res:"+res);return "some3";},()=>{console.log("do sth2.5")}).then((some)=>{console.log(some)});
-		console.log("some4");//验证异步操作
+		console.log("some4");//脩茅脰陇脪矛虏陆虏脵脳梅
 
-		// promise实现ajax操作
+		// promise脢碌脧脰ajax虏脵脳梅
 		var getJSON = function(url){
 			var promise = new Promise(function(resolve,reject){
 				var client = new XMLHttpRequest();
@@ -196,10 +200,10 @@
 		getJSON("./ajax.json").then(function(json){
 			console.log("contents:"+json.name);
 		},function(error){
-			console.error("出错了",error);
+			console.error("鲁枚麓铆脕脣",error);
 		})
-		// promise实现ajax操作
-		// thunk函数转换器
+		// promise脢碌脧脰ajax虏脵脳梅
+		// thunk潞炉脢媒脳陋禄禄脝梅
 		var Thunk = function(fn){
 			return function(...args){
 				return function(callback){
@@ -211,8 +215,8 @@
 			constructor(x,y){
 				this.x = x;
 				this.y = y;
-				if(new.target === point){//利用new.target特性写一个继承才能使用的类
-					throw new Error("本类不能实例化");
+				if(new.target === point){//脌没脫脙new.target脤脴脨脭脨麓脪禄赂枚录脤鲁脨虏脜脛脺脢鹿脫脙碌脛脌脿
+					throw new Error("卤戮脌脿虏禄脛脺脢碌脌媒禄炉");
 				}
 			}
 			output(){
@@ -230,9 +234,9 @@
 		}
 		function callmobile(num = ""){
 			if(num == ""){
-				alert("是空的");
+				alert("脢脟驴脮碌脛");
 			}else{
-				alert("不是空的"+num);
+				alert("虏禄脢脟驴脮碌脛"+num);
 			}
 		}
 
@@ -244,23 +248,39 @@
 		}
 		console.log(strcurry("aaa")("bbb"));
 		var obj_aa = {};
-		//set和get与value,config不能在同一对象
+		//set潞脥get脫毛value,config虏禄脛脺脭脷脥卢脪禄露脭脧贸
 		Object.defineProperty(obj_aa,'b',{
 			get: function(){
-				console.log("get了obj_aa");
+				console.log("get脕脣obj_aa");
 				return 2222;
 			}
 		})
 		console.log(obj_aa);
-		//跳转拦截
+		//脤酶脳陋脌鹿陆脴
 		function gotourl(url){
-		    var a = $('<a href="'+ url +'" target="_blank">链接</a>');  //生成一个临时链接对象
+		    var a = $('<a href="'+ url +'" target="_blank">脕麓陆脫</a>');  //脡煤鲁脡脪禄赂枚脕脵脢卤脕麓陆脫露脭脧贸
 		    var d = a.get(0);
 		    var e = document.createEvent('MouseEvents');
-		    e.initEvent( 'click', true, true );  //模拟点击操作
+		    e.initEvent( 'click', true, true );  //脛拢脛芒碌茫禄梅虏脵脳梅
 		    d.dispatchEvent(e);
-		    a.remove();   // 点击后移除该对象
+		    a.remove();   // 碌茫禄梅潞贸脪脝鲁媒赂脙露脭脧贸
 		}
+		console.log("arrrrrrrrrrr:"+ Object.keys(arr));
+		
+		function rndnum(m){
+			var arr1 = new Array(m);
+			for(var i = 0;i < m;i++){
+				arr1[i] = i;
+			}
+			var arr2 = new Array();
+			for(var i = 0;i < m;i++){
+				var rnd = Math.floor(Math.random() * (i+1));
+				[arr1[rnd],arr1[i]] = [arr1[i], arr1[rnd]];
+			}
+
+			return arr1;
+		}
+		console.log(rndnum(10));
 	</script>
 </body>
 </html>
