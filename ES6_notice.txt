@@ -32,7 +32,9 @@ WebSocket
 Canvas
 AJAX
 
-Set()唯一数组类型，类似数组但不是数组，可以用数组的方法
+在===里NaN不等于本身
+两个对象也是不相等的
+Set()‘唯一’数组类型，类似数组但不是数组，可以用数组的方法
 加入成员为set.add(a)
 获取长度为set.size
 Set结构的实例有以下属性
@@ -41,4 +43,61 @@ Set.prototype.size: 返回实例的成员总数
 delete(value) 删除某个值
 has(value)判断是否包含
 clear()清楚所有成员
+提供四个方法来进行遍历：
+keys(): 返回键名
+values(): 返回键值
+entries(): 返回键值对
+forEach(): 使用回调函数遍历每个成员
+set结构是没有键值的 所以返回的 keys和values是一样的
+用set结构能实现并集，交集，差集
+
+WeakSet‘成员’只能是对象
+var a = [2,2];
+var ws = new WeakSet(a);//报错
+WeakSet结构有三个方法
+add(value)添加新成员
+delete(value)清除制定成员
+has(value)是否包含
+主要作用是不会引起内存泄漏（弱引用，随时消失）
+
+
+Map结构类型“值-值”的对应关系
+对同样一个键多次赋值，后面的值会覆盖前面的值
+var map = new Map();
+map.set(['a'],500);
+map.get(['a']); //undefined
+Map的键实际上是和内存地址绑定的
+如果键是一个简单类型的值（数字，字符串，布尔值），只要两个值严格相等，
+就会视为一个键，包括0和-0  NaN
+size 成员总数
+set设置键值
+get(key) , has(key) , delete(key) , clear()
+Map结构的默认遍历器借口是entries
+[...map.keys()]转换数组类型
+Map没有map和filter方法但有forEach() 第二个绑定this
+map.forEach(function(value,key,map){
+	this.report();
+},reporter);
+这里的this会指向reporter
+
+WeakMap只要是值接受对象作为键名，不接受其他类型的值作为键名，
+键名所指向的对象不计入垃圾回收机制
+专用场合是键所对应的对象随时在未来可能会消失，有助于防止内存泄漏
+var wm = new WeakMap();
+var element = document.querySelector(".element");
+wm.set(element,"Original");
+wm.get(element)//Original
+element.parentNode.removeChild(element);
+element = null;
+wm.get(element) //undefined
+没有size,所以不存在遍历操作(keys(),values(),entries())
+只能用 get(),set(),has(),delete()
+
+Iterator的作用有三：
+一、为各种数据结构提供一个统一的简便的访问借口
+二、使得数据结构的成员能够按某种次序排列
+三、供for...of消费
+
+
+
 
