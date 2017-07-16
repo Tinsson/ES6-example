@@ -97,7 +97,102 @@ Iterator的作用有三：
 一、为各种数据结构提供一个统一的简便的访问借口
 二、使得数据结构的成员能够按某种次序排列
 三、供for...of消费
+要在Symbol.iterator的属性上部署遍历器生成方法
+[Symbol.iterator](){return this;}
+类似数组的对象，部署Iterator接口是直接引用数组的Iterator接口
+NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.Iterator];
+实现iterator最简单的方法是用Genertor函数
+let obj = {
+	* [Symbol.iterator](){
+		yield 'hello';
+		yield 'world';
+	}
+}
+for(let x of obj){
+	console.log(x);
+}
+return 方法必须返回一个对象
+
+for...of使用的范围包括数组、Set和Map结构、某些类似数组的对象
+如（arguments对象、DOM NodeList对象）Generator对象以及字符串
+set和map循环的顺序是按各个成员添加进去的顺序
+set是一个值，map是一个数组
+
+forEach循环的问题： 中途不能跳出循环，break命令或者return命令都不能奏效
+for...in的几个缺点
+数组的键名是数字，但是这个循环的键名是字符串"0","1"
+还会遍历手动添加的其他键，包括原型链上的键
+某些情况下，for...in会以任意顺序遍历键名
 
 
+调用Generator函数后，函数不执行，返回一个指向内部状态的指针对象
+（Iterator Object）
+yield语句是暂停执行的标记，而next方法可以恢复执行
+遍历器对象的next方法的运行逻辑：
+1.遇到yield就暂停执行，返回一个值作为返回的value属性值
+2.下一次next方法继续往下执行直到下一个yield语句
+3.如果没有新的yield语句一直到return为止
+4.如果该函数没有return语句，就会返回undefined
 
-
+yeild语句不能放在普通函数中
+如果yeild语句用在一个表达式中必须放在圆括号里面
+yield本身没有返回值，或者说返回undefined，但是next方法可以带一个参数，这个参数就是会当成上一个yield语句的返回值
+next方法第一次使用时不能带有参数
+有遍历器借口的方法都能将Generator函数返回的Iterator对象作为参数
+function* numbers(){
+	yield 1
+	yield 2
+	return 3
+	yield 4
+}
+[...numbers()]//[1,2]
+Array.from(numbers())// [1,2]
+let[x,y] = numbers();
+x // 1
+y // 2
+可以在Generator函数外部执行语句中throw一个错误在函数内部捕捉这个错误
+throw的参数会被catch语句接收
+throw方法被捕获以后会附带执行下一条yield语句
+Generator函数还有一个return方法可以返回给定的值并终结遍历Generator函数
+try...finally用于执行一段代码结束后执行块里的语句
+如果在Generator函数里调用Generator函数是不会有效果的
+需要用yield*语句在Generator函数里执行另一个Generator函数
+比如：
+function* bar(){
+	yield 1;
+	yield* foo();
+	yield 2;
+}
+function* foo(){
+	yield 3;
+}
+var g = bar();
+任何数据结构只要有Iterator接口，就可以被yield*遍历
+yield*可以很方便地取出嵌套数组的所有成员
+function* iterTree(tree){
+	if(Array.isArray(tree)){
+		for(let i=0;i< tree.length;i++){
+			yield* iterTree(tree[i]);
+		}
+	}else{
+		yield tree;
+	}
+}
+const tree = [1,[2,3],[4,5]];
+for(let x of iterTree(tree)){
+	console.log(x);
+}
+//1
+//2
+//...
+对象属性是Generator函数可以简写成
+let obj = {
+	* gfunc(){
+		...
+	}
+}
+Generator函数不是构造函数不能跟new命令一起用
+应用有：1.异步操作的同步化表达
+2.控制流管理
+3.部署Iterator接口
+4.作为数据结构

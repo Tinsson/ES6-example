@@ -1,0 +1,9 @@
+标签
+mark 标记
+progress 进度信息
+time 时间标签供搜索引擎
+datalist 供input刚开始选择
+
+script有defer和async属性可添加，一个是等页面加载完后加载另一个是异步加载
+style有个scoped属性来表示标签内有效
+p标签增加一个contenteditable="true"来编辑内容
