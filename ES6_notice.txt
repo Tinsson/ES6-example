@@ -196,3 +196,29 @@ Generator函数不是构造函数不能跟new命令一起用
 2.控制流管理
 3.部署Iterator接口
 4.作为数据结构
+
+
+
+var p = new Promise(function(resolve,reject){
+	//...
+	resolve();
+	reject();
+})
+Promise一旦新建就会立即执行
+Promise对象是一个构造函数，用来生成Promise实例
+生成实例后可以用then分别制定Resolved状态和Reject状态的回调函数
+第一个是Resolved调用的第二个是Reject调用的，但第二个是可选的
+如果resolved和reject函数有参数就会把参数带到then里去
+.catch()是.then(null,rejection)的别名，指定发生错误的回调函数
+不要在then里定义Reject状态的回调函数，总是使用catch方法
+
+Promise.all()将多个Promise实例包装成一个新的Promise实例
+var p = Promise.all([p1,p2,p3]);
+Promise.all()的参数可以不是数组但必须要有iterator接口
+p的状态有两种
+1.三个都办成fulfilled，p才会是fulfilled
+2.只要有一个呗rejected，第一个呗reject返回值就传下去了
+Promise.rece()和Promise.all()类似，但只要有一个率先改变状态就会改变自身状态
+Promise.resolve()和Promise.reject()
+.done()和.finally()的区别是finally接受一个普通的回调作为参数，不管怎么样都必须执行
+应用：1.加载图片 2.Generator函数与Promise的结合
