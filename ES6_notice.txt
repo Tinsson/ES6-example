@@ -222,3 +222,28 @@ Promise.rece()和Promise.all()类似，但只要有一个率先改变状态就�
 Promise.resolve()和Promise.reject()
 .done()和.finally()的区别是finally接受一个普通的回调作为参数，不管怎么样都必须执行
 应用：1.加载图片 2.Generator函数与Promise的结合
+
+async函数Generator函数的语法糖
+var gen = function* (){
+	var f1 = yield readFile('/etc/fstab');
+	var f2 = yield readFile('/etc/shells');
+	console.log(f1.toString());
+	console.log(f2.toString());
+}
+可以写成
+var asyncReadFile = async function (){
+	var f1 = await readFile('/etc/fstab');
+	var f2 = await readFile('/etc/shells');
+	console.log(f1.toString());
+	console.log(f2.toString());
+}
+改进：
+1.内置执行器 var result = asyncReadFile();直接出结果
+2.更好的语义化
+3.更广的适用性 await后面可以是Promise对象也可以是原始类型的值
+4.返回值是Promise，比Generator返回Iterator方便
+
+async函数返回的Promise对象必须等到内部所有await命令的Promise对象执行完才会发生状态改变
+async函数命令后面是一个Promise对象，如果不是，就会转成一个立即resolve的Promise对象。
+为了避免第一个语句里出现reject报错可以把语句放在try...catch里面
+最好把await放在try...catch代码块里
