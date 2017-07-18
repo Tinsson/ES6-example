@@ -247,3 +247,55 @@ async函数返回的Promise对象必须等到内部所有await命令的Promise�
 async函数命令后面是一个Promise对象，如果不是，就会转成一个立即resolve的Promise对象。
 为了避免第一个语句里出现reject报错可以把语句放在try...catch里面
 最好把await放在try...catch代码块里
+
+class可以看做语法糖
+定义类如下
+class Point{
+	constructor(x,y){
+		this.x = x;
+		this.y = y;
+	}
+	toString(){
+		return "(" + this.x + "," +this.y + ")";
+	}
+}
+定义类的方法时候前面不需要加上function关键字，方法之间不需要逗号分隔，加了会报错
+使用时和构造函数的用法完全一致
+var p = new Point();
+p.constructor === Point.prototype.constructor //true
+prototype对象的constructor属性直接指向类的本身
+Point.prototype.constructor === Point //true
+类内部定义的方法都是不可枚举的
+
+constructor方法是类的默认方法，通过new命令生成对象实例时，自动调用该方法。一个类必须要有constructor方法，如果没有显式定义，一个空的constructor方法就会被默认添加
+constructor方法默认返回实例对象（this）
+Class不支持变量提升，必须先定义类再使用
+_bar表示这是一个只限内部使用的私有方法
+还可以内部用bar.call(this,baz)的方法调用外部的模块
+
+类的方法内部如果含有this,他默认指向类的实例。但是必须非常小心
+可以用箭头函数
+class之间可以通过extends关键字来实现继承，比如：
+class ColorPoint extends Point{
+	constructor(x,y,color){
+		super(x,y); //调用父类的constructor(x,y)
+		this.color = color;
+	}
+}
+子类必须在constructor方法中调用super方法，否则新建实例时会报错，因为子类没有自己的this对象
+在子类的构造函数中，只有调用super之后，才可以使用this关键字
+class A{}
+class B {}
+B.__proto__ === A //true
+B.prototype.__proto__ === A.prototype //true
+super关键词有两种用法
+作为函数调用时，super代表父类的构造函数
+作为对象调用时，代表父类
+
+如果在一个方法前加上static关键字，表示该方法不会被实例继承，而是直接通过类来调用
+class Foo{
+	static classMethod(){
+		return "hello";
+	}
+}
+Foo.classMethod();
