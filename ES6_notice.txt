@@ -298,4 +298,101 @@ class Foo{
 		return "hello";
 	}
 }
-Foo.classMethod();
+Foo.classMethod();//hello
+class里只有静态方法，没有静态属性（ES6）ES7有
+
+修饰器（Decorator）是一个函数类修改类的行为
+修饰器对类的行为的改变是代码编译时发生的
+修饰器函数的第一个参数是target
+修饰器只能用于类和类的方法，不能用于函数，因为存在函数提升
+
+import {stat,exists,readFile} from "fs";
+上面代码实质是从fs模块加载3个方法，其他方法不加载，这种加载为“编译时加载”
+ES6模块的好处
+不需要UMD模块格式
+将来浏览器的新API能用模块格式提供，不需要做成全局变量
+不再需要对象作为命名空间，比如Math对象
+浏览器使用ES6模块语法如下
+<script type="module" src="foo.js"></script>
+上述代码在网页中插入模块foo.js，由于type属性设为module，所以浏览器能识别模块
+（Node的默认模块格式是CommonJS，目前还没支持ES6模块，要用Balbel转码来使用）
+ES6模块自动采用严格模式：
+1.变量必须声明后再使用
+2.函数的参数不能有同名属性，否则报错
+3.不能用with语句
+4.不能对只读属性赋值，否则报错
+5.不能使用前缀0表示八进制数
+6.不能删除不可删除的属性
+7.不能删除变量delete prop
+8.eval不会在它的外层作用域引入变量
+9.eval和arguments不能被重新赋值
+10.不能使用arguments.callee和arguments.caller
+11.禁止this指向全局变量
+12.不能只用fn.caller和fn.arguments获取函数调用的堆栈
+13.增加了保留字（protected、static和interface）
+
+模块功能又两个命令组成 export和import
+export命令用于规定模块的对外接口，import命令用于输入其他模块提供的功能
+export命令除了输出变量，还可以输出函数或类
+正确的输出方式
+export var m = 1;
+var m = 1;
+export {m};
+var n = 1;
+export {n as m}
+同样的，function和class的输出也必须遵循这样的写法
+export function f(){}
+function f(){}
+export {f}
+
+export语句输出的接口是动态绑定的
+export语句可以在模块的任何位置，但是要处于模块顶层不能在块级作用域内
+
+用as关键词可以为输入的变量重新取一个名字如
+import {lastname as surname} from './profile';
+import命令具有提升效果，会提升到整个模块的头部首先执行
+使用*可以整体加载，从而制定一个对象拥有所有输出值
+import * as circle from "./circle";
+circle.area + circle.circumference
+
+export default命令能为模块制定默认输出
+export default function(){
+	console.log('foo');
+}
+
+import customName from './export-default';
+customName();能指定任意名字
+这时import命令后面不使用大括号
+
+假如继承其他模块可以这样：
+export * from 'circle';
+
+CommonJS模块输出的是一个值得拷贝，而ES6模块输出的是值得引用
+import得到的变量指向的地址是只读的，不能重新赋值
+
+
+编程风格
+1.let可以完全取代var
+2.在let和const之间建议使用const，尤其在全局环境中，不应该设置变量
+比如： const [a,b,c] = [1,2,3];
+3.静态字符串一律使用单引号或者反引号。动态字符串使用反引号
+
+使用数组成员对变量赋值时候，有限使用解构赋值如：
+const [firse,second] = arr;
+
+使用扩展运算符(...)拷贝数组
+const itemsCopy = [...items];
+使用Array.from方法，将类似数组的对象转换为数组
+const foo = document.querySelectAll('.foo');
+const nodes = Array.from(foo);
+
+立即执行函数可以写成箭头函数的形式
+(()=> {
+	console.log('welcome to the internet')
+})();
+简单的、单行的、不会复用的函数建议箭头函数，如果函数体较为复杂，行数较多，建议采用传统的函数写法。
+
+区分Object和Map，只有模拟现实世界的实体对象时，才使用Object
+使用Class取代需要prototype的操作
+
+map方法遍历成员时，如果发现是空位就会直接跳过，不会进入回调函数。
