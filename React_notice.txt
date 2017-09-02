@@ -1,0 +1,25 @@
+组件名称必须以大写字母开头，div表示一个DOM标签，但是<Welcome />表示一个组件并限定了可用范围
+所有的React组件必须像纯函数一样使用它们的props，比如：
+function sum(a,b){
+	return a+ b;
+}
+
+setState()注意事项：
+1、不要直接更新状态
+this.state.comment = 'Hello';//wrong
+this.setState({comment: 'Hello'});//right
+构造函数是唯一能初始化this.state的地方
+2、状态更新可能是异步的
+可以用接受的第二个参数来使用props
+this.setState((prevState, props)=>({
+	count: prevState.counter + props.increment
+}))
+3、状态更新合并
+可以独立更新state里的一个变量
+
+React事件绑定属性的命名采用驼峰式写法，而不是小写
+如果采用JSX的语法需要传入一个函数作为事件处理函数
+onClick={active}
+不能返回false来阻止默认行为，得使用preventDefault
+
+JSX回调函数中this.handleClick传入onClick没有绑定this那么在函数中的this就会返回undefined

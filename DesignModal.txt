@@ -1,0 +1,39 @@
+1.单例模式：
+保证一个类仅有一个实例，并提供一个访问它的全局访问点
+适用场景：（线程池，全局缓存）
+代理类的方式：
+ 先创建需要的普通的业务逻辑类，
+ 再使用代理类
+ var ProxySingleton = (function(){
+ 	var instance;
+ 	return function(html){
+ 		if(!instance){
+ 			instance = new CreateDiv(html);
+ 		}
+ 		return instance;
+ 	}
+ })();
+
+2.策略模式
+定义一系列算法，把它们一个个封装起来，目的是将算法的使用
+与算法的实现分离开来
+一个策略模式的程序要有两部分组成
+第一个部分是一组策略类，策略类封装了具体的算法，并负责具体的计算过程。
+第二个部分是环境类Context，context接受客户的请求，随后把请求委托给某个策略类。
+
+//策略对象
+var strategies = {
+	"S": function (salary){
+		return salary * 4;
+	},
+	"A": function (salary){
+		return salary * 3;
+	},
+	"B": function (salary){
+		return salary * 2;
+	}
+}
+var calcBonus = function (level, salary){
+	return strategies[level](salary);
+}
+calcBonus('S',20000);
