@@ -78,4 +78,30 @@ var proxyMult = (function(){
 		return cache[args] = mult.apply(this,argumens);
 	}
 })
+可以在ajax异步请求数据的时候使用缓存代理，比如项目中用到分页的需求，
+把拉取过的数据放在缓存中可以减少对后台的请求。
 
+还可以利用高阶函数来动态创建代理
+
+var creatProxyFactory = function(fn){
+	var cache = {};
+	return function(){
+		var args = Array.prototype.join.call(arguments,',');
+		if(args in cache){
+			return cache[args];
+		}
+		return cache[args] = fn.apply(this,arguments);
+	}
+}
+var proxyMult = createProxyFactory(mult);
+var proxyPlus = createProxyFactory(plus);
+
+代理的种类：
+1.防火墙代理
+2.远程代理
+3.保护代理
+4.智能引用代理
+5.写时复制代理
+
+
+4.迭代器模式
