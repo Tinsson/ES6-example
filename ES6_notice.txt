@@ -108,8 +108,8 @@ wm.get(element) //undefined
 Iterator的作用有三：
 一、为各种数据结构提供一个统一的简便的访问借口
 二、使得数据结构的成员能够按某种次序排列
-三、供for...of消费
-要在Symbol.iterator的属性上部署遍历器生成方法
+三、供for...of消费（while）
+要在Symbol.iterator的属性上部署遍历器生成方法（或者原型链上的对象具有该方法）
 [Symbol.iterator](){return this;}
 类似数组的对象，部署Iterator接口是直接引用数组的Iterator接口
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.Iterator];
