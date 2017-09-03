@@ -32,6 +32,9 @@ reflect一些方法的返回值更加合理，不是报错而是返回false
 reflect让object操作都变成函数行为，比如
 'assign' in Object //true
 Reflect.has(Object, 'assign'); //true
+Reflect对象的方法与proxy对象的方法一一对应，只要是proxy对象的方法就能在reflect对象上找到对应的方法。
+同时，不管proxy怎么修改默认行为，都可以在reflect上获取默认行为。
+
 
 
 操作二进制文件可用的API  h5新特性
